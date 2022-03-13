@@ -46,7 +46,7 @@ router.get('/register',(req,res)=>{
 })
 
 router.get('/logout',(req,res)=>{
-    console.log(req.session.user)
+    console.log(req.session.admin)
     req.session.destroy()
     res.redirect('/')
 })
