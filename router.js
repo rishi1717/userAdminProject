@@ -46,7 +46,6 @@ router.get('/register',(req,res)=>{
 })
 
 router.get('/logout',(req,res)=>{
-    console.log(req.session.admin)
     req.session.destroy()
     res.redirect('/')
 })
@@ -77,7 +76,15 @@ router.post('/admin',async (req,res)=>{
 
 router.get('/adminPanel',(req,res)=>{
     if(req.session.admin){
-        res.render('adminPanel',{admin:req.body.admin})
+        userModel.find((err,data)=>{
+            if(err) console.log(err.message)
+            else{
+                len = data.length
+                console.log(data)
+                res.render('adminPanel',{admin:req.body.admin, users: data, len: len})
+            }
+        })
+        
     }
     else
         res.render('unauthorized') 

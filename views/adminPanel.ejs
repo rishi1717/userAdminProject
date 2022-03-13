@@ -8,13 +8,32 @@
 </nav>
 
 
+<div class="cover-container d-flex w-100 h-100 mt-5 mx-auto flex-column">
+  <h1 class="display-5 text-center m-3">Web site Details</h1>
+  <div class="container bg-light text-dark">
+      <div class="row"> 
+        <div class="col-lg-6">
+          <div class="display-6 text-center m-3">Number of users</div>
+          <div class="text-center display-6"><%=len%></div>
+        </div>
+        <div class="col-lg-6">
+          <div class="display-6 text-center m-3">Number of posts</div>
+          <div class="text-center display-6"><%=len%></div>
+        </div>
+      </div>
+  </div>
+</div>
 
-<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-    <h1 class="cover-heading text-center mb-3">Table</h1>
+
+
+<div class="cover-container d-flex w-100 h-100 mt-5 mx-auto flex-column">
+    <h1 class="display-5 text-center m-3">User details</h1>
     <div class="container bg-light text-dark">
       <table class="table table-striped">
-        <tr><th>Framework</th><th>URL</th></tr>
-        <tr><td>asdf</td><td>asdf</td></tr>
+        <tr><th>User ID</th><th>User Name</th><th>email</th></tr>
+        <%for(let i =0 ; i<len; i++){ %>
+        <tr><td><%= users[i]._id %></td><td><%= users[i].userName %></td><td><%= users[i].email %></td></tr>
+        <% } %>
       </table>
     </div>
 </div>
