@@ -9,7 +9,6 @@ const userModel = require('./model/user.model')
 const blogModel = require('./model/blog.model')
 const adminModel = require('./model/admin.model')
 
-let user = new userModel()
 
 // app.use(cookieParser())
 
@@ -51,15 +50,11 @@ router.get('/logout',(req,res)=>{
 })
 
 router.post('/register', (req,res)=>{
-    user.userName = req.body.user
-    user.password = req.body.password
-    user.email = req.body.email
-    user.save((err,doc)=>{
-        if(err)
-            console.log('error')
-        else 
-            res.redirect('/')
-    })
+    // user.userName = req.body.user
+    // user.password = req.body.password
+    // user.email = req.body.email
+    userModel.insertMany([{userName: req.body.user, password: req.body.password, email: req.body.email}])
+    res.redirect('/')
     
 })
 
@@ -79,15 +74,29 @@ router.get('/adminPanel',(req,res)=>{
         userModel.find((err,data)=>{
             if(err) console.log(err.message)
             else{
-                len = data.length
-                console.log(data)
-                res.render('adminPanel',{admin:req.body.admin, users: data, len: len})
+                console.log(data[2].name)
+                blogModel.find((err,blogs)=>{
+                    if(err) console.log(err.message)
+                    else{
+                        blogNo = blogs.length 
+                        len = data.length
+                        res.render('adminPanel',{admin:req.body.admin, users: data, len: len, blogNo: blogNo})
+                    }
+                })
             }
         })
         
     }
     else
         res.render('unauthorized') 
+})
+
+router.get('/search',(req,res)=>{
+    
+    userModel.find({userName: req.query.search},(err,data)=>{
+        len = data.length
+        res.render('adminPanel',{admin:req.body.admin, users: data, len: len, blogNo: 3})
+    })
 })
 
  module.exports = router

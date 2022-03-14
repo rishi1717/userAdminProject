@@ -2,7 +2,7 @@
 
 <nav class="navbar fixed-top navbar-light bg-light">
     <div class="container-fluid d-flex">
-      <a class="navbar-brand" href="#">The blogworld</a>
+      <a class="navbar-brand" href="#">The blog world</a>
       <a href="/route/logout"><button class="btn btn-primary" type="submit">Log out</button></a>
     </div>
 </nav>
@@ -18,7 +18,7 @@
         </div>
         <div class="col-lg-6">
           <div class="display-6 text-center m-3">Number of posts</div>
-          <div class="text-center display-6"><%=len%></div>
+          <div class="text-center display-6"><%=blogNo%></div>
         </div>
       </div>
   </div>
@@ -26,13 +26,22 @@
 
 
 
+
 <div class="cover-container d-flex w-100 h-100 mt-5 mx-auto flex-column">
     <h1 class="display-5 text-center m-3">User details</h1>
+    
     <div class="container bg-light text-dark">
       <table class="table table-striped">
-        <tr><th>User ID</th><th>User Name</th><th>email</th></tr>
+        <form action="/route/search" method="get">
+          <div class="input-group">
+            <input type="search" class="form-control rounded" placeholder="Search" name="search" />
+            <button type="submit" class="btn btn-outline-primary">search</button>
+          </div>
+        </form>
+        
+        <tr><th>User ID</th><th>User Name</th><th>name</th><th>email</th></tr>
         <%for(let i =0 ; i<len; i++){ %>
-        <tr><td><%= users[i]._id %></td><td><%= users[i].userName %></td><td><%= users[i].email %></td></tr>
+        <tr><td><%= users[i]._id %></td><td><%= users[i].userName %></td><td><%= users[i].name %></td><td><%= users[i].email %></td></tr>
         <% } %>
       </table>
     </div>
