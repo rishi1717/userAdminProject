@@ -1,13 +1,5 @@
 <%- include('header') -%>
 
-<nav class="navbar fixed-top navbar-light bg-light">
-    <div class="container-fluid d-flex">
-      <a class="navbar-brand" href="#">The blog world</a>
-      <a href="/route/logout"><button class="btn btn-primary" type="submit">Log out</button></a>
-    </div>
-</nav>
-
-
 <div class="cover-container d-flex w-100 h-100 mt-5 mx-auto flex-column">
   <h1 class="display-5 text-secondary  text-center m-3">Web site Details</h1>
   <div class="container bg-light text-dark p-5">
@@ -41,12 +33,19 @@
         
         <tr><th>User ID</th><th>User Name</th><th>name</th><th>email</th><th>Update</th><th>Delete</th></tr>
         <%for(let i =0 ; i<len; i++){ %>
-        <tr><td><%= users[i]._id %></td><td><%= users[i].userName %></td><td><%= users[i].name %></td><td><%= users[i].email %></td><td class="text-center"><button type="button" class="btn btn-outline-warning btn-sm">^</button></td><td class="text-center"><button type="button" class="btn btn-outline-danger btn-sm">X</button></td></tr>
+        <tr><td><%= users[i]._id %></td><td><%= users[i].userName %></td><td><%= users[i].name %></td><td><%= users[i].email %></td>
+          <td class="text-center">
+          <a href="/route/updateClick/<%= users[i]._id %>" class="btn btn-outline-warning btn-sm">^</a>
+          </td>
+          <td class="text-center">
+            <a href="/route/deleteUser/<%= users[i].userName %>" class="btn btn-outline-danger btn-sm">X</a>
+          </td>
+        </tr>
         <% } %>
       </table>
 
       <div class="text-center mb-3">
-        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Add a user</button>
+        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add a user</button>
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -85,3 +84,6 @@
 
 
 <%- include('footer') -%>
+
+
+
