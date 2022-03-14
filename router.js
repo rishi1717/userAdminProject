@@ -1,4 +1,3 @@
-// const cookieParser = require('cookie-parser')
 const express= require('express')
 const mongoose = require('mongoose')
 const app=express()
@@ -9,8 +8,6 @@ const userModel = require('./model/user.model')
 const blogModel = require('./model/blog.model')
 const adminModel = require('./model/admin.model')
 
-
-// app.use(cookieParser())
 
 router.post('/login',async (req,res)=>{
     let userFound = await userModel.findOne({userName:req.body.user, password:req.body.password})
@@ -50,10 +47,8 @@ router.get('/logout',(req,res)=>{
 })
 
 router.post('/register', (req,res)=>{
-    // user.userName = req.body.user
-    // user.password = req.body.password
-    // user.email = req.body.email
-    userModel.insertMany([{userName: req.body.user, password: req.body.password, email: req.body.email}])
+    console.log(req.body);
+    userModel.insertMany([{userName: req.body.user, name:req.body.name, password: req.body.password, email: req.body.email}])
     res.redirect('/')
     
 })
@@ -74,7 +69,6 @@ router.get('/adminPanel',(req,res)=>{
         userModel.find((err,data)=>{
             if(err) console.log(err.message)
             else{
-                console.log(data[2].name)
                 blogModel.find((err,blogs)=>{
                     if(err) console.log(err.message)
                     else{
@@ -92,11 +86,23 @@ router.get('/adminPanel',(req,res)=>{
 })
 
 router.get('/search',(req,res)=>{
-    
-    userModel.find({userName: req.query.search},(err,data)=>{
+    if(req.session.admin){
+       userModel.find({$or: [{name: req.query.search},{userName: req.query.search},{email: req.query.search}]},(err,data)=>{
         len = data.length
         res.render('adminPanel',{admin:req.body.admin, users: data, len: len, blogNo: 3})
-    })
+        }) 
+    }
+    else{
+        res.render('unauthorized')
+    }
+    
+})
+
+router.post('/addUser', (req,res)=>{
+    console.log(req.body)
+    userModel.insertMany([{userName: req.body.user,name:req.body.name, password: req.body.password, email: req.body.email}])
+    res.redirect('adminPanel')
+    
 })
 
  module.exports = router
