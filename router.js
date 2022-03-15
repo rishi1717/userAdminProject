@@ -1,5 +1,6 @@
 const express= require('express')
 const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
 const app=express()
 
 const router = express.Router()
@@ -7,13 +8,20 @@ const router = express.Router()
 const userModel = require('./model/user.model')
 const blogModel = require('./model/blog.model')
 const adminModel = require('./model/admin.model')
+const { render } = require('express/lib/response')
 
 
 router.post('/login',async (req,res)=>{
-    let userFound = await userModel.findOne({userName:req.body.user, password:req.body.password})
+    let userFound = await userModel.findOne({userName:req.body.user})
     if(userFound){
-        req.session.user = req.body.user
-        res.redirect('home')
+        let hashedPass = await bcrypt.compare(req.body.password, userFound.password)
+        console.log("access granted");
+        if(hashedPass){
+            req.session.user = req.body.user
+            res.redirect('home') 
+        }
+        else 
+            res.render('login',{error:'Wrong credentials!'})
     }
     else 
         res.render('login',{error:'Wrong credentials!'})
@@ -46,7 +54,7 @@ router.get('/logout',(req,res)=>{
     res.redirect('/')
 })
 
-router.post('/register', (req,res)=>{
+router.post('/register', async (req,res)=>{
     let userError = "" ,nameError = "" ,CPasserror = "", passError = "" 
     if(req.body.user.length<5){
        userError = "Atleast 5 characters required!"
@@ -63,9 +71,17 @@ router.post('/register', (req,res)=>{
     if(userError||nameError||CPasserror){
         res.render('register',{userError:userError,nameError:nameError,CPasserror:CPasserror})
     }
-    
-    // userModel.insertMany([{userName: req.body.user, name:req.body.name, password: req.body.password, email: req.body.email}])
-    // res.redirect('/')
+    else{
+        let hashedPass = await bcrypt.hash(req.body.password,12)
+        console.log(hashedPass)
+        userModel.insertMany([{userName: req.body.user, name:req.body.name, password: hashedPass, email: req.body.email}]).then((m)=>{
+            res.redirect('/')
+        }) .catch((e)=>{
+            console.log(e.message)
+
+            res.render('register',{userError:userError,nameError:nameError,CPasserror:CPasserror, duplicateError:"Email or Username already registered"})
+        })
+    }   
     
 })
 
@@ -114,10 +130,30 @@ router.get('/search',(req,res)=>{
     
 })
 
-router.post('/addUser', (req,res)=>{
-    console.log(req.body)
-    userModel.insertMany([{userName: req.body.user,name:req.body.name, password: req.body.password, email: req.body.email}])
-    res.redirect('adminPanel')
+router.get('/addClick',(req,res)=>{
+    if(req.session.admin){
+        res.render('addUser')
+    }
+    else{
+        res.render('adminUnauthorized')
+    }
+})
+
+router.post('/addUser', async (req,res)=>{
+    if(req.session.admin){
+        let hashedPass = await bcrypt.hash(req.body.password,12)
+        userModel.insertMany([{userName: req.body.user, name:req.body.name, password: hashedPass, email: req.body.email}]).then((m)=>{
+            res.redirect('adminPanel')
+        }) .catch((e)=>{
+            console.log(e.message)
+            res.render('addUser',{duplicateError:"Email or Username already registered"})
+        })
+    
+    }
+    else{
+        res.render('adminUnauthorized')
+    }
+    
     
 })
 
@@ -137,9 +173,9 @@ router.get('/updateClick/:id',(req,res)=>{
     
 })
 
-router.post('/updateUser', (req,res)=>{
+router.post('/updateUser', async (req,res)=>{
     if(req.session.admin){
-       userModel.updateOne({_id:req.body._id},{userName: req.body.user,name:req.body.name, password: req.body.password, email: req.body.email}).then((m)=>{
+       userModel.updateOne({_id:req.body._id},{userName: req.body.user,name:req.body.name, email: req.body.email}).then((m)=>{
             console.log(m)
             res.redirect('adminPanel')
         })
@@ -173,6 +209,5 @@ router.get('/deleteUser/:user', async (req,res)=>{
         console.log(e.message);
     })
 })
-
 
  module.exports = router

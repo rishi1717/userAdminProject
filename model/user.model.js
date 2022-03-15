@@ -7,13 +7,15 @@ let userSchema = new mongoose.Schema({
     },
     userName: {
         type: String,
-        required: "Required"
+        required: "Required",
+        unique: true
     },
     password: {
         type: String
     },
     email: {
-        type: String
+        type: String,
+        unique: true
     }
 })
 

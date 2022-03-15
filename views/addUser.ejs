@@ -1,0 +1,33 @@
+<%- include('header') -%>
+
+      <div class="mt-10 modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">New User</h5>
+          </div>
+          <div class="modal-body">
+            <form action="/route/addUser" method="post">
+                <div class="text-center py-2 text-danger"><%= locals.duplicateError?duplicateError:"" %></div>
+              <div class="mb-3">
+                <label for="user" class="col-form-label">User name:</label>
+                <input type="text" class="form-control" id="user" name="user">
+              </div>
+              <div class="mb-3">
+                <label for="name" class="col-form-label">name:</label>
+                <input type="text" class="form-control" id="name" name="name"></input>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="col-form-label">Email:</label>
+                <input type="text" class="form-control" id="email" name="email"></input>
+              </div>
+              <div class="mb-3">
+                <label for="password" class="col-form-label">Password:</label>
+                <input type="password" class="form-control" id="password" name="password"></input>
+              </div>
+              <button type="submit" class="btn btn-primary">Add user</button>
+            </form>
+          </div>
+        </div>
+      </div>
+  
+  <%- include('footer') -%>

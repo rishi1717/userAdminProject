@@ -7,3 +7,10 @@
 .mt-10{
     margin-top: 4.5em;
 }
+.mb-10{
+    margin-bottom: 4.5em;
+}
+
+body{
+    background-color: rgb(115, 115, 255) !important;
+}

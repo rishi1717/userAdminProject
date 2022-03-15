@@ -1,8 +1,8 @@
 <%- include('header') -%>
 
 <div class="cover-container d-flex w-100 h-100 mt-5 mx-auto flex-column">
-  <h1 class="display-5 text-secondary  text-center m-3">Web site Details</h1>
-  <div class="container bg-light text-dark p-5">
+  <h1 class="display-5 text-light  text-center m-3">Web site Details</h1>
+  <div class="container bg-light text-dark p-5 rounded">
       <div class="row"> 
         <div class="col-lg-6">
           <div class="display-6 text-secondary text-center m-3">Number of users</div>
@@ -20,12 +20,12 @@
 
 
 <div class="cover-container d-flex w-100 h-100 mt-5 mx-auto flex-column">
-    <h1 class="display-5 text-center m-3 text-secondary ">User details</h1>
+    <h1 class="display-5 text-center m-3 text-light ">User details</h1>
     
-    <div class="container bg-light text-dark">
+    <div class="container bg-light text-dark p-4 rounded">
       <table class="table table-striped">
         <form action="/route/search" method="get">
-          <div class="input-group">
+          <div class="input-group mb-3">
             <input type="search" class="form-control rounded" placeholder="Search" name="search" />
             <button type="submit" class="btn btn-outline-primary">search</button>
           </div>
@@ -45,40 +45,8 @@
       </table>
 
       <div class="text-center mb-3">
-        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add a user</button>
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New User</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <form action="/route/addUser" method="post">
-                  <div class="mb-3">
-                    <label for="user" class="col-form-label">User name:</label>
-                    <input type="text" class="form-control" id="user" name="user">
-                  </div>
-                  <div class="mb-3">
-                    <label for="name" class="col-form-label">name:</label>
-                    <input type="text" class="form-control" id="name" name="name"></input>
-                  </div>
-                  <div class="mb-3">
-                    <label for="email" class="col-form-label">Email:</label>
-                    <input type="text" class="form-control" id="email" name="email"></input>
-                  </div>
-                  <div class="mb-3">
-                    <label for="password" class="col-form-label">Password:</label>
-                    <input type="text" class="form-control" id="password" name="password"></input>
-                  </div>
-                  <button type="submit" class="btn btn-primary">Add user</button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
+        <a href="/route/addClick" type="button" class="btn btn-outline-primary">Add a user</a>
       </div>
-
     </div>
 </div>
 

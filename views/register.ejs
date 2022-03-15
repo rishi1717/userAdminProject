@@ -5,7 +5,7 @@
     <a href="/"><button class="btn btn-primary" type="submit">Login</button></a>
   </div>
 </nav>
-      <body class="bg-dark">
+      <body>
         <div class="container mt-5">
           <div class="row h-100 d-flex justify-content-center">
             <div class="d-flex col-md-8 col-lg-6 h-100 justify-content-center  align-items-center">
@@ -15,6 +15,7 @@
                   <h3 class="mb-4">Register</h3>
 
                   <form action="/route/register" method="post">
+                    <div class="text-center py-2 text-danger"><%= locals.duplicateError?duplicateError:"" %></div>
 
                     <div class="mb-4">
                       <label class="form-label formText" for="user">User Name : </label>
