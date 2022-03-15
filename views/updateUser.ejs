@@ -1,6 +1,6 @@
 <%- include('header') -%>
 
-<div class="mt-10">
+  <div class="mt-10">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -10,19 +10,19 @@
           <form action="/route/updateUser" method="post">
             <div class="mb-2">
               <label for="_id" class="col-form-label">User Id:</label>
-              <input type="text" class="form-control" id="_id" name="_id" value= "<%= user[0]._id %>" readonly>
+              <input type="text" class="form-control" id="_id" name="_id" value="<%= user[0]._id %>" readonly>
             </div>
             <div class="mb-2">
               <label for="user" class="col-form-label">User name:</label>
-              <input type="text" class="form-control" id="user" name="user" value= "<%= user[0].userName %>">
+              <input type="text" class="form-control" id="user" name="user" value="<%= user[0].userName %>" required>
             </div>
             <div class="mb-2">
               <label for="name" class="col-form-label">name:</label>
-              <input type="text" class="form-control" id="name" name="name" value= "<%= user[0].name %>"></input>
+              <input type="text" class="form-control" id="name" name="name" value="<%= user[0].name %>" required></input>
             </div>
             <div class="mb-2">
               <label for="email" class="col-form-label">Email:</label>
-              <input type="text" class="form-control" id="email" name="email" value= "<%= user[0].email %>"></input>
+              <input type="text" class="form-control" id="email" name="email" value="<%= user[0].email %>" required></input>
             </div>
             <button type="submit" class="btn btn-primary">Update user</button>
           </form>
