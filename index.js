@@ -36,12 +36,12 @@ app.use("/assets", express.static(path.join(__dirname, "assets")))
 
 app.set("view engine", "ejs")
 
-app.get("/", (req, res) => {
-	res.render("login")
+app.get("/admin/:err?", (req, res) => {
+	res.render("admin", { error: req.params.err })
 })
 
-app.get("/admin", (req, res) => {
-	res.render("admin")
+app.get("/:err?", (req, res) => {
+	res.render("login", {error: req.params.err})
 })
 
 app.use("/route", router)

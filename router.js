@@ -21,8 +21,8 @@ router.post("/login", async (req, res) => {
 		if (hashedPass) {
 			req.session.user = req.body.user
 			res.redirect("home")
-		} else res.render("login", { error: "Wrong credentials!" })
-	} else res.render("login", { error: "Wrong credentials!" })
+		} else res.redirect("/Wrong credentials!")
+	} else res.redirect("/Wrong credentials!")
 })
 
 router.get("/home", (req, res) => {
@@ -110,7 +110,7 @@ router.post("/admin", async (req, res) => {
 	if (adminFound) {
 		req.session.admin = req.body.admin
 		res.redirect("adminPanel")
-	} else res.render("admin", { error: "Wrong Credentials!" })
+	} else res.redirect("/admin/wrong credentials!")
 })
 
 router.get("/adminPanel", (req, res) => {
